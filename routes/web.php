@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\DriverActionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +27,10 @@ Route::get('/map', function () {
     return view('map');
 });
 
+Route::get('manage/drivers/action/{id?}', [DriverActionController::class,'changestatus'])->middleware('auth')->name('changeStatus');
+
 Route::resource('manage/drivers', DriverController::class)->middleware('auth');
+
 
 Route::get('/manage', function (Request $request) {
         echo $request->getHttpHost();

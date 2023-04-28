@@ -52,7 +52,13 @@
                                             
 											<td>{{ $driver->name }}</td>
 											<td>{{ $driver->phone_number }}</td>
-											<td>{{ $driver->status }}</td>
+											<td>
+                                                @if ($driver->status == 1)
+                                                    <a href="{{ route('changeStatus',$driver->id) }}" class="btn btn-success" role="button" aria-pressed="true">On line</a>
+                                                @else
+                                                    <a href="{{ route('changeStatus',$driver->id) }}" class="btn btn-danger" role="button" aria-pressed="true">Off line</a>
+                                                @endif
+                                            </td>
 											<td>{{ $driver->car_info }}</td>
 											<td>{{ $driver->car_reg_info }}</td>
 

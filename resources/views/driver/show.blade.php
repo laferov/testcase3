@@ -19,6 +19,12 @@
                     </div>
 
                     <div class="card-body">
+
+                            @if ($driver->status == 1)
+                                <strong>Status:</strong> <a href="{{ route('changeStatus',$driver->id) }}" class="btn btn-success" role="button" aria-pressed="true">On line</a>
+                            @else
+                                <strong>Status:</strong> <a href="{{ route('changeStatus',$driver->id) }}" class="btn btn-danger" role="button" aria-pressed="true">Off line</a>
+                            @endif
                         
                         <div class="form-group">
                             <strong>Name:</strong>
@@ -27,10 +33,6 @@
                         <div class="form-group">
                             <strong>Phone Number:</strong>
                             {{ $driver->phone_number }}
-                        </div>
-                        <div class="form-group">
-                            <strong>Status:</strong>
-                            {{ $driver->status }}
                         </div>
                         <div class="form-group">
                             <strong>Car Info:</strong>
