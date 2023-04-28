@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\DriverController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +22,17 @@ Route::get('/', function () {
     return 'nothing to do here';
 });
 
+Route::get('/map', function () {
+    return view('map');
+});
+
+Route::resource('manage/drivers', DriverController::class)->middleware('auth');
+
 Route::get('/manage', function (Request $request) {
         echo $request->getHttpHost();
-    });
+    })->middleware('auth');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
