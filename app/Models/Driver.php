@@ -25,7 +25,7 @@ class Driver extends Model
     static $rules = [
 		'name' => 'required',
 		'phone_number' => 'required',
-		'status' => 'required',
+		'status' => 'required|boolean',
 		'car_info' => 'required',
 		'car_reg_info' => 'required',
     ];

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DriverActionController;
 
+use App\Models\User;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,13 @@ use App\Http\Controllers\DriverActionController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/user/{id?}', function($id){
+    $user = User::find($id)->only('name');
+    return $user;
+});
+
+Route::get('/drivers/setpos/{id}/{x}/{y}', [DriverActionController::class,'setpos']);
 
 Route::get('/test/{id?}', [DriverActionController::class,'checkstatus']);
 

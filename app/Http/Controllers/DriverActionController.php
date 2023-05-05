@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Driver;
+use App\Models\DriverOrder;
 
 class DriverActionController extends Controller
 {
@@ -13,11 +14,19 @@ class DriverActionController extends Controller
        $driver->save();
        $temp = compact('driver');
        return back();
-       #return view('driver.show', compact('driver'));
     }
 
     public function checkstatus($id) {
         $driver = Driver::find($id)->status;
         dd($driver);
      }
+    public function setpos($id) {
+      $driver_location = Driver::find($id);
+      if (empty($driver_location)) {
+         return 'Driver is unactive';
+      } else
+      {
+         
+      }
+    } 
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\DriverActionController;
 /*
@@ -22,6 +23,8 @@ use App\Http\Controllers\DriverActionController;
 Route::get('/', function () {
     return 'nothing to do here';
 });
+
+Route::get('/test/{var?}', [TestController::class,'index'])->name('testroute');
 
 Route::get('/map', function () {
     return view('map');

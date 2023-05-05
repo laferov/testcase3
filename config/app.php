@@ -70,7 +70,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('TIMEZONE', 'UTC'),
 
     /*
     |--------------------------------------------------------------------------
@@ -185,4 +185,10 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+
+        Custom config parameters
+
+    */
+    'api_token' => 'gP3KxzOhsRu0iY9VDJpXuBK561W8kpMZRVsU4nARiq27alImNDuDHEySZcRrpImT',
 ];
