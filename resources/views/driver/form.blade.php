@@ -11,11 +11,11 @@
             {{ Form::text('phone_number', $driver->phone_number, ['class' => 'form-control' . ($errors->has('phone_number') ? ' is-invalid' : ''), 'placeholder' => 'Phone Number']) }}
             {!! $errors->first('phone_number', '<div class="invalid-feedback">:message</div>') !!}
         </div>
-        <div class="form-group">
+        {{-- <div class="form-group">
             {{ Form::label('status') }}
             {{ Form::text('status', $driver->status, ['class' => 'form-control' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => 'Status']) }}
             {!! $errors->first('status', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+        </div> --}}
         <div class="form-group">
             {{ Form::label('car_info') }}
             {{ Form::text('car_info', $driver->car_info, ['class' => 'form-control' . ($errors->has('car_info') ? ' is-invalid' : ''), 'placeholder' => 'Car Info']) }}

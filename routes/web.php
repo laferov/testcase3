@@ -21,7 +21,7 @@ use App\Http\Controllers\DriverActionController;
 // });
 
 Route::get('/', function () {
-    return 'nothing to do here';
+    return view('index',['content' => 'test']);
 });
 
 Route::get('/test/{var?}', [TestController::class,'index'])->name('testroute');
@@ -35,9 +35,9 @@ Route::get('manage/drivers/action/{id?}', [DriverActionController::class,'change
 Route::resource('manage/drivers', DriverController::class)->middleware('auth');
 
 
-Route::get('/manage', function (Request $request) {
-        echo $request->getHttpHost();
-    })->middleware('auth');
+// Route::get('/manage', function (Request $request) {
+//         echo $request->getHttpHost();
+//     })->middleware('auth');
 
 
 Auth::routes();
