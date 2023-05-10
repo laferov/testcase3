@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
+#use App\Models\DriverLocation;
 use Illuminate\Http\Request;
 
 /**
@@ -44,7 +45,6 @@ class DriverController extends Controller
     public function store(Request $request)
     {
         request()->validate(Driver::$rules);
-
         $driver = Driver::create($request->all());
 
         return redirect()->route('drivers.index')

@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\DriverActionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,18 +21,23 @@ use App\Http\Controllers\DriverController;
 // });
 
 Route::get('/', function () {
-    return 'nothing to do here';
+    return view('index',['content' => 'test']);
 });
+
+Route::get('/test/{var?}', [TestController::class,'index'])->name('testroute');
 
 Route::get('/map', function () {
     return view('map');
 });
 
+Route::get('manage/drivers/action/{id?}', [DriverActionController::class,'changestatus'])->middleware('auth')->name('changeStatus');
+
 Route::resource('manage/drivers', DriverController::class)->middleware('auth');
 
-Route::get('/manage', function (Request $request) {
-        echo $request->getHttpHost();
-    })->middleware('auth');
+
+// Route::get('/manage', function (Request $request) {
+//         echo $request->getHttpHost();
+//     })->middleware('auth');
 
 
 Auth::routes();
