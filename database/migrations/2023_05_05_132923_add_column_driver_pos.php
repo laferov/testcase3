@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('drivers', function (Blueprint $table) {
-            $table->json('driver_pos')->after('status');
+            $table->json('driver_pos')->after('status')->default('{"x":1,"y":1}');
         });
     }
 
