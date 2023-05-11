@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DriverActionController;
+use App\Http\Controllers\Api\DriverController;
 
 use App\Models\User;
 
@@ -27,6 +28,14 @@ Route::get('/user/{id?}', function($id){
     $user = User::find($id)->only('name');
     return $user;
 });
+
+#Route::get('/test', [DriverController::class,'index']);
+
+Route::get('drivers',[DriverController::class,'index']);
+
+Route::get('drivers/status/{id}',[DriverController::class,'getDriverStatus']);
+Route::get('drivers/position/{id}',[DriverController::class,'getDriverPos']);
+Route::put('drivers/position/{id}/{x}/{y}',[DriverController::class,'setDriverPos']);
 
 Route::get('/drivers/setpos/{id}/{x}/{y}', [DriverActionController::class,'setpos']);
 
