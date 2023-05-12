@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\DriverActionController;
@@ -21,7 +22,16 @@ use App\Http\Controllers\DriverActionController;
 // });
 
 Route::get('/', function () {
-    return view('index',['content' => 'test']);
+    return view('index',['content' => 'Lorem Ipsum']);
+});
+
+Route::post('drivers/changepos/{id}',[DriverActionController::class,'setpos'])->name('changeDriverPos');
+
+
+
+Route::get('/test', function() {
+    dd(Auth::check());
+
 });
 
 Route::get('/test/{var?}', [TestController::class,'index'])->name('testroute');

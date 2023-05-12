@@ -103,6 +103,6 @@ class DriverController extends Controller
         $driver = Driver::find($id)->delete();
 
         return redirect()->route('drivers.index')
-            ->with('success', 'Driver deleted successfully');
+            ->with('success', 'Driver deleted successfully!');
     }
 }

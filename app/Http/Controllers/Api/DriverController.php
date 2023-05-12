@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\DB;
-
 use App\Models\Driver;
 
 class DriverController extends Controller
@@ -17,23 +15,30 @@ class DriverController extends Controller
     }
 
     public function getDriverStatus($id) {
-        #$driver_status = Driver::find($id)->status->pluck('status');
-        $driver_status = DB::table('drivers')->select('status')->where('id',$id)->get();
-        return $driver_status[0];
+        $driver_status = Driver::find($id)->only('status');
+        return $driver_status;
     }
 
     public function getDriverPos($id) {
-        $driver_pos = Driver::find($id)->driver_pos;
+        $driver_pos = Driver::find($id);
         return $driver_pos;
     }
 
-    public function setDriverPos($id,$x,$y) {
+    public function setDriverPos(Request $request, $id) {
+        $validated = $request->validate([
+            'pos_x' => 'required|integer|between:0,1000',
+            'pos_y' => 'required|integer|between:0,1000',
+        ]);
+        
+        $x = $request->input('pos_x');
+        $y = $request->input('pos_y');
         $driver_pos = Driver::find($id);
         $position = ["x" => $x, "y" => $y];
         $driver_pos->driver_pos = json_encode($position);
         $driver_pos->save();
-        return;
+        
+        return True;
     }
 
-    
+
 }

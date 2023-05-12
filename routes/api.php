@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DriverActionController;
 use App\Http\Controllers\Api\DriverController;
 
+use App\Http\Controllers\TestController;
+
 use App\Models\User;
 
 
@@ -29,17 +31,24 @@ Route::get('/user/{id?}', function($id){
     return $user;
 });
 
-#Route::get('/test', [DriverController::class,'index']);
 
-Route::get('drivers',[DriverController::class,'index']);
+#Route::match(['put','post'],'/test', [TestController::class, 'test']);
 
-Route::get('drivers/status/{id}',[DriverController::class,'getDriverStatus']);
-Route::get('drivers/position/{id}',[DriverController::class,'getDriverPos']);
-Route::put('drivers/position/{id}/{x}/{y}',[DriverController::class,'setDriverPos']);
+// Route::put('/test/{id}', function(Request $request,$id) {
+//     die($id);
 
-Route::get('/drivers/setpos/{id}/{x}/{y}', [DriverActionController::class,'setpos']);
+// });
 
-Route::get('/test/{id?}', [DriverActionController::class,'checkstatus']);
+Route::prefix('drivers')->middleware('auth_api')->group(function () {
+    Route::get('/',[DriverController::class,'index']);
+    Route::get('/status/{id}',[DriverController::class,'getDriverStatus']);
+    Route::get('/position/{id}',[DriverController::class,'getDriverPos']);
+    Route::post('/position/{id}',[DriverController::class,'setDriverPos']);
+});
+
+
+
+#Route::get('/test/{id?}', [DriverActionController::class,'checkstatus']);
 
 Route::post('/auth/register', [AuthController::class, 'createUser']);
 Route::post('/auth/login', [AuthController::class, 'loginUser']);
