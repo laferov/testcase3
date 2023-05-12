@@ -29,7 +29,7 @@ class DriverController extends Controller
             'pos_x' => 'required|integer|between:0,1000',
             'pos_y' => 'required|integer|between:0,1000',
         ]);
-        
+
         $x = $request->input('pos_x');
         $y = $request->input('pos_y');
         $driver_pos = Driver::find($id);
@@ -40,5 +40,14 @@ class DriverController extends Controller
         return True;
     }
 
+    public function getActiveDrivers() {
+        $drivers = Driver::where('status',1)->get(['id','driver_pos']);
+        $ready_drivers = [];
+        foreach ($drivers as $driver) {
+            $driver_pos = json_decode($driver->driver_pos,true);
+            $ready_drivers[strval($driver->id)] = $driver_pos;
+        }
+        return json_encode($ready_drivers);
+    }
 
 }

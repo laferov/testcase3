@@ -42,6 +42,7 @@ Route::get('/user/{id?}', function($id){
 Route::prefix('drivers')->middleware('auth_api')->group(function () {
     Route::get('/',[DriverController::class,'index']);
     Route::get('/status/{id}',[DriverController::class,'getDriverStatus']);
+    #Route::get('/active',[DriverController::class,'getDriverPos']);
     Route::get('/position/{id}',[DriverController::class,'getDriverPos']);
     Route::post('/position/{id}',[DriverController::class,'setDriverPos']);
 });

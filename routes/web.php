@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\DriverActionController;
+
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,7 +29,7 @@ Route::get('/', function () {
 
 Route::post('drivers/changepos/{id}',[DriverActionController::class,'setpos'])->name('changeDriverPos');
 
-
+Route::get('/drivers/active',['App\Http\Controllers\Api\DriverController','getActiveDrivers']);
 
 Route::get('/test', function() {
     dd(Auth::check());
@@ -43,6 +45,8 @@ Route::get('/map', function () {
 Route::get('manage/drivers/action/{id?}', [DriverActionController::class,'changestatus'])->middleware('auth')->name('changeStatus');
 
 Route::resource('manage/drivers', DriverController::class)->middleware('auth');
+
+Route::resource('orders', OrderController::class)->middleware('auth');
 
 
 // Route::get('/manage', function (Request $request) {
