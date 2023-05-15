@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Http;
+
 /**
  * Class OrderController
  * @package App\Http\Controllers
@@ -51,13 +53,21 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        #request()->validate(Order::$rules);
-        #dd($request->all());
-
-        $active_drivers = '{"3":{"x":"5","y":"5"},"4":{"x":"25","y":"25"}}';
+        $url = 'https://taxi.laferov.ru/api/drivers/active';
+        $active_drivers = Http::get($url)->body();
+        dd($active_drivers);
         $active_drivers = json_decode($active_drivers,true);
-        $x1 = 1;
-        $y1 = 2;
+        dd($active_drivers);
+        $from = array(
+            "x" => $request->from_x,
+            "y" => $request->from_y,
+        );
+
+        $to = array(
+            "x" => $request->to_x,
+            "y" => $request->to_y,
+        );
+
         $driver_distance = [];
         foreach ($active_drivers as $id => $driver) {
             $x2 = intval($driver['x']);
@@ -65,11 +75,8 @@ class OrderController extends Controller
             $driver_distance[$id] = $this->distance($x1,$y1,$x2,$y2);
         }
 
-        $nearest_driver = array_search(min($driver_distance),$driver_distance);
-
-        $distance = $this->distance(2,9,5,4);
-
-        dd($distance); 
+        $nearest_driver_id = array_search(min($driver_distance),$driver_distance);
+        $distance = min($driver_distance);
 
 
         $from = array(

@@ -42,9 +42,11 @@ Route::get('/map', function () {
     return view('map');
 });
 
-Route::get('manage/drivers/action/{id?}', [DriverActionController::class,'changestatus'])->middleware('auth')->name('changeStatus');
+Route::get('manage/drivers/changestatus/{id?}', [DriverActionController::class,'changestatus'])->middleware('auth')->name('changeStatus');
 
 Route::resource('manage/drivers', DriverController::class)->middleware('auth');
+
+
 
 Route::resource('orders', OrderController::class)->middleware('auth');
 

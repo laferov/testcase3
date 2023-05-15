@@ -37,11 +37,11 @@
                                     @csrf
                                     <div class="mb-3 w-25">
                                         <label for="pos_x" class="form-label">X</label>
-                                        <input type="number" class="form-control" id="pos_x" name="pos_x">
+                                        <input type="number" min="0" max="1000" class="form-control" id="pos_x" name="pos_x">
                                     </div>
                                     <div class="mb-3 w-25">
                                         <label for="pos_y" class="form-label">Y</label>
-                                        <input type="number" class="form-control" id="pos_y" name="pos_y">
+                                        <input type="number" min="0" max="1000" class="form-control" id="pos_y" name="pos_y">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>

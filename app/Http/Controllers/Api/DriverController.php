@@ -47,6 +47,7 @@ class DriverController extends Controller
             $driver_pos = json_decode($driver->driver_pos,true);
             $ready_drivers[strval($driver->id)] = $driver_pos;
         }
+        
         return json_encode($ready_drivers);
     }
 
