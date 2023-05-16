@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Http;
 
+
+
 /**
  * Class OrderController
  * @package App\Http\Controllers
@@ -53,41 +55,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $url = 'https://taxi.laferov.ru/api/drivers/active';
-        $active_drivers = Http::get($url)->body();
-        dd($active_drivers);
-        $active_drivers = json_decode($active_drivers,true);
-        dd($active_drivers);
-        $from = array(
-            "x" => $request->from_x,
-            "y" => $request->from_y,
-        );
-
-        $to = array(
-            "x" => $request->to_x,
-            "y" => $request->to_y,
-        );
-
-        $driver_distance = [];
-        foreach ($active_drivers as $id => $driver) {
-            $x2 = intval($driver['x']);
-            $y2 = intval($driver['y']);
-            $driver_distance[$id] = $this->distance($x1,$y1,$x2,$y2);
+        $response = Http::put('https://taxi.laferov.ru/api/orders/create', $request->all());
+        if ($response->getStatusCode() == '200') {
+            return redirect()->route('orders.index')
+        ->with('success', 'Order created successfully.');
         }
 
-        $nearest_driver_id = array_search(min($driver_distance),$driver_distance);
-        $distance = min($driver_distance);
-
-
-        $from = array(
-            "x" => $request->from_x,
-            "y" => $request->from_y,
-        );
-        dd($from->toJson());
-        $order = Order::create($request->all());
-
         return redirect()->route('orders.index')
-            ->with('success', 'Order created successfully.');
+                ->with('error', 'Error creating order');
+
+
+        
     }
 
     /**

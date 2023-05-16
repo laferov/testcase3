@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\DriverActionController;
 use App\Http\Controllers\Api\DriverController;
+use App\Http\Controllers\Api\OrderController;
 
 use App\Http\Controllers\TestController;
 
@@ -45,6 +46,10 @@ Route::prefix('drivers')->group(function () {
     Route::get('/active',[DriverController::class,'getActiveDrivers']);
     Route::get('/position/{id}',[DriverController::class,'getDriverPos']);
     Route::post('/position/{id}',[DriverController::class,'setDriverPos']);
+});
+
+Route::prefix('orders')->group(function () {
+    Route::put('/create',[OrderController::class,'store']);
 });
 
 
