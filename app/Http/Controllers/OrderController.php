@@ -17,11 +17,13 @@ use Illuminate\Support\Facades\Http;
 class OrderController extends Controller
 {
 
-    private function distance($x1,$y1,$x2,$y2) {
-        $dx = abs($x2 - $x1);
-        $dy = abs($y2 - $y1);
-        return ($dx + $dy);
+    protected $site_domain;
+
+    public function __construct() {
+        $this->site_domain = config('app.url');
     }
+
+
 
     /**
      * Display a listing of the resource.
@@ -55,7 +57,8 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $response = Http::put('https://taxi.laferov.ru/api/orders/create', $request->all());
+
+        $response = Http::put($this->site_domain . '/api/orders/create', $request->all());
         if ($response->getStatusCode() == '200') {
             return redirect()->route('orders.index')
         ->with('success', 'Order created successfully.');

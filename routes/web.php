@@ -31,11 +31,6 @@ Route::post('drivers/changepos/{id}',[DriverActionController::class,'setpos'])->
 
 Route::get('/drivers/active',['App\Http\Controllers\Api\DriverController','getActiveDrivers']);
 
-Route::get('/test', function() {
-    dd(Auth::check());
-
-});
-
 Route::get('/test/{var?}', [TestController::class,'index'])->name('testroute');
 
 Route::get('/map', function () {

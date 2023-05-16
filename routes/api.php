@@ -50,6 +50,7 @@ Route::prefix('drivers')->group(function () {
 
 Route::prefix('orders')->group(function () {
     Route::put('/create',[OrderController::class,'store']);
+    Route::get('/changestatus/{order_id}/{status}',[OrderController::class,'changeStatus']);
 });
 
 

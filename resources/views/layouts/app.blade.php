@@ -33,11 +33,8 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/manage/drivers">Drivers</a>
                                 </li>
-                    </ul>
-
-                    <ul class="navbar-nav me-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/orders">Drivers</a>
+                                    <a class="nav-link" href="/orders">Orders</a>
                                 </li>
                     </ul>
 

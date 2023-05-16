@@ -10,6 +10,14 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
+    protected $site_domain;
+    protected $order_statuses;
+
+    public function __construct() {
+        $this->site_domain = config('app.url');
+        $this->order_statuses = array('way_to_pass','way_to_dest','waiting','finished');
+    }
+
     private function distance($x1,$y1,$x2,$y2) {
         $dx = abs($x2 - $x1);
         $dy = abs($y2 - $y1);
@@ -17,8 +25,7 @@ class OrderController extends Controller
     }
 
     public function store(Request $request) {
-                
-        $url = 'https://taxi.laferov.ru/api/drivers/active';
+        $url = $this->site_domain . '/api/drivers/active';
         $active_drivers = Http::get($url)->body();
         $active_drivers = json_decode($active_drivers,true);
         $from = array(
@@ -45,9 +52,11 @@ class OrderController extends Controller
 
         $order = new Order;
             $order->driver_id = $nearest_driver_id;
-            $order->order_status = 'way_to_passenger';
+            $order->order_status = 'way_to_pass';
             $order->from = json_encode($from);
             $order->to = json_encode($to);
+        
+
         
         try {
             $order->save();
@@ -58,41 +67,19 @@ class OrderController extends Controller
         
     }
 
-    public function getDriverStatus($id) {
-        $driver_status = Driver::find($id)->only('status');
-        return $driver_status;
-    }
-
-    public function getDriverPos($id) {
-        $driver_pos = Driver::find($id);
-        return $driver_pos;
-    }
-
-    public function setDriverPos(Request $request, $id) {
-        $validated = $request->validate([
-            'pos_x' => 'required|integer|between:0,1000',
-            'pos_y' => 'required|integer|between:0,1000',
-        ]);
-
-        $x = $request->input('pos_x');
-        $y = $request->input('pos_y');
-        $driver_pos = Driver::find($id);
-        $position = ["x" => $x, "y" => $y];
-        $driver_pos->driver_pos = json_encode($position);
-        $driver_pos->save();
-        
-        return True;
-    }
-
-    public function getActiveDrivers() {
-        $drivers = Driver::where('status',1)->get(['id','driver_pos']);
-        $ready_drivers = [];
-        foreach ($drivers as $driver) {
-            $driver_pos = json_decode($driver->driver_pos,true);
-            $ready_drivers[strval($driver->id)] = $driver_pos;
+    public function changeStatus($id,$status) {
+        if (!in_array($status,$this->order_statuses)) {
+            return response()->json(['status' => 'order status not exist'])->setStatusCode(400);
         }
+
+        $order = Order::find($id);
+        $order->order_status = $status;
+        $order->save(); 
+
+        return response()->json(['status' => 'success changing status'])->setStatusCode(200);
+
         
-        return json_encode($ready_drivers);
+
     }
 
 }
