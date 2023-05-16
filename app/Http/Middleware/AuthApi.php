@@ -2,18 +2,30 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
-use Illuminate\Http\Request;
+use Closure;
 
-class AuthApi extends Middleware
+class AuthApi
 {
-    protected function authenticate($request, array $guards) 
+    /**
+     * Обработка входящего запроса.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
     {
+        
         $token = $request->query('api_token');
         if (empty($token)) {
             $token = $request->bearerToken();
         }
-        if ( config('app')['api_token'] === $token) return;
-        $this->unauthenticated($request,$guards);
+        $token = 'testtoken';
+        #if ( config('app')['api_token'] !== $token) {
+        if ( 'testtoken' !== $token) {
+            return response('Unauthorized',401);
+        }
+
+        return $next($request);
     }
 }

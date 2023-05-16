@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    Driver
+    Order
 @endsection
 
 @section('content')
@@ -13,11 +13,11 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Driver') }}
+                                {{ __('Order') }}
                             </span>
 
                              <div class="float-right">
-                                <a href="{{ route('drivers.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
+                                <a href="{{ route('orders.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
                               </div>
@@ -28,7 +28,8 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-                    @if ($message = Session::get('success'))
+
+                    @if ($message = Session::get('error'))
                         <div class="alert alert-danger">
                             <p>{{ $message }}</p>
                         </div>
@@ -41,36 +42,30 @@
                                     <tr>
                                         <th>No</th>
                                         
-										<th>Name</th>
-										<th>Phone Number</th>
-										<th>Status</th>
-										<th>Car Info</th>
-										<th>Car Reg Info</th>
+										<th>Driver Id</th>
+										<th>Passenger Id</th>
+										<th>Order Status</th>
+										<th>From</th>
+										<th>To</th>
 
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($drivers as $driver)
+                                    @foreach ($orders as $order)
                                         <tr>
                                             <td>{{ ++$i }}</td>
                                             
-											<td>{{ $driver->name }}</td>
-											<td>{{ $driver->phone_number }}</td>
-											<td>
-                                                @if ($driver->status == 1)
-                                                    <a href="{{ route('changeStatus',$driver->id) }}" class="btn btn-success" role="button" aria-pressed="true">On line</a>
-                                                @else
-                                                    <a href="{{ route('changeStatus',$driver->id) }}" class="btn btn-danger" role="button" aria-pressed="true">Off line</a>
-                                                @endif
-                                            </td>
-											<td>{{ $driver->car_info }}</td>
-											<td>{{ $driver->car_reg_info }}</td>
+											<td>{{ $order->driver_id }}</td>
+											<td>{{ $order->passenger_id }}</td>
+											<td>{{ $order->order_status }}</td>
+											<td>{{ $order->from }}</td>
+											<td>{{ $order->to }}</td>
 
                                             <td>
-                                                <form action="{{ route('drivers.destroy',$driver->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary " href="{{ route('drivers.show',$driver->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('drivers.edit',$driver->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                <form action="{{ route('orders.destroy',$order->id) }}" method="POST">
+                                                    <a class="btn btn-sm btn-primary " href="{{ route('orders.show',$order->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                    <a class="btn btn-sm btn-success" href="{{ route('orders.edit',$order->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
@@ -83,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $drivers->links() !!}
+                {!! $orders->links() !!}
             </div>
         </div>
     </div>
