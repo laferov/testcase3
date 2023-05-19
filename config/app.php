@@ -192,5 +192,5 @@ return [
         Custom config parameters
 
     */
-    'api_token' => env(API_TOKEN, 'dev_token'),
+    'api_token' => env('API_TOKEN', 'dev_token'),
 ];
