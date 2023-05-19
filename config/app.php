@@ -192,5 +192,5 @@ return [
         Custom config parameters
 
     */
-    'api_token' => 'gP3KxzOhsRu0iY9VDJpXuBK561W8kpMZRVsU4nARiq27alImNDuDHEySZcRrpImT',
+    'api_token' => env(API_TOKEN, 'dev_token'),
 ];
